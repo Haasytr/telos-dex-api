@@ -34,4 +34,4 @@ db.pokemons.find({ type1: 'fire', type2: 'flying' }, { name: 1, type1: 1, type2:
 
 // Listar todos os pokemons exceto os lendários "is_legendary", exibindo os seguintes campos: "name" e "pokedex_number"
 
-db.pokemons.find({ $nor: [{ is_legendary: "1" }] }, { name: 1, pokedex_number: 1, _id: 0 })
+db.pokemons.find({ $ne: [{ is_legendary: "1" }] }, { name: 1, pokedex_number: 1, _id: 0 })
