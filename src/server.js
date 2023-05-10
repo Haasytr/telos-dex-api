@@ -2,7 +2,7 @@ const express = require('express')
 
 const rootRoutes = require('./routes/index')
 
-require('./api/mongodb')
+require('./database/mongodb')
 const { PORT } = require('./config/env')
 
 const app = express()
