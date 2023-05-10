@@ -56,9 +56,9 @@ const listById = async (req, res) => {
   const { id } = req.params
 
   try {
-    const pokemon = await TreinerModel.findById(id)
+    const treiner = await TreinerModel.findById(id)
 
-    return res.json(pokemon)
+    return res.json(treiner)
   } catch (err) {
     return res.status(400).json({
       error: '@treiners/listById',
