@@ -9,9 +9,8 @@ treinersRoutes.route('/')
   .get(treinersController.list)
 
 treinersRoutes.route('/:id')
+  .get(treinersController.listById)
   .put(treinersController.update)
   .delete(treinersController.remove)
-
-
 
 module.exports = treinersRoutes

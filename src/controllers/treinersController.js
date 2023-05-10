@@ -52,6 +52,21 @@ const list = async (req, res) => {
   }
 }
 
+const listById = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const pokemon = await TreinerModel.findById(id)
+
+    return res.json(pokemon)
+  } catch (err) {
+    return res.status(400).json({
+      error: '@treiners/listById',
+      message: err.message || "failed to list treiner"
+    })
+  }
+}
+
 const update = async (req, res) => {
   const { id } = req.params
   const { name, age, location, is_leader, badges, speciality, pokemons } = req.body
@@ -82,11 +97,13 @@ const update = async (req, res) => {
       pokemons: pokemons ? pokemonsDetailed : undefined
     }
 
+    if (!updatedTreiner) {
+      throw new Error()
+    }
+
     await TreinerModel.findByIdAndUpdate(id, updatedTreiner)
 
-    const treiner = await TreinerModel.findById(id)
-
-    return res.json(treiner)
+    return res.json(updatedTreiner)
   } catch (err) {
     return res.status(400).json({
       error: '@treiners/update',
@@ -121,5 +138,6 @@ module.exports = {
   list,
   create,
   update,
-  remove
+  remove,
+  listById,
 }

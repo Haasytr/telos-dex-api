@@ -9,6 +9,7 @@ pokemonsRoutes.route('/')
   .post(pokemonsController.create)
 
 pokemonsRoutes.route('/:id')
+  .get(pokemonsController.listById)
   .put(pokemonsController.update)
   .delete(pokemonsController.remove)
 
