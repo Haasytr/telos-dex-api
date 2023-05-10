@@ -125,7 +125,7 @@ const remove = async (req, res) => {
       })
     }
 
-    return res.json({})
+    return res.status(204).json({})
   } catch (err) {
     return res.status(400).json({
       error: '@treiner/remove',
