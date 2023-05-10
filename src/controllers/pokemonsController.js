@@ -42,14 +42,25 @@ const list = async (req, res) => {
   try {
     const pokemons = await PokemonModel.find(queryParams)
 
-    if (pokemons.length < 1) {
-      throw new Error("Couldn't find a pokemon")
-    }
-
     return res.json(pokemons)
   } catch (err) {
     return res.status(400).json({
       error: '@pokemons/list',
+      message: err.message || "failed to list pokemons"
+    })
+  }
+}
+
+const listById = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const pokemon = await PokemonModel.findById(id)
+
+    return res.json(pokemon)
+  } catch (err) {
+    return res.status(400).json({
+      error: '@pokemons/listById',
       message: err.message || "failed to list pokemon"
     })
   }
@@ -59,21 +70,23 @@ const update = async (req, res) => {
   const { id } = req.params
   const { name, attack, defense, speed, hp, type1, type2, is_legendary } = req.body
 
-  const updatedPokemon = {
-    name,
-    attack,
-    defense,
-    speed,
-    type1,
-    type2,
-    hp,
-    is_legendary
-  }
-
   try {
-    await PokemonModel.findByIdAndUpdate(id, updatedPokemon)
+    const updatedPokemon = {
+      name,
+      attack,
+      defense,
+      speed,
+      type1,
+      type2,
+      hp,
+      is_legendary
+    }
 
-    const pokemon = await PokemonModel.findById(id)
+    if (!updatedPokemon) {
+      throw new Error()
+    }
+
+    await PokemonModel.findByIdAndUpdate(id, updatedPokemon)
 
     return res.json(pokemon)
   } catch (err) {
@@ -97,7 +110,7 @@ const remove = async (req, res) => {
       })
     }
 
-    return res.json({})
+    return res.status(204).json({})
   } catch (err) {
     return res.status(400).json({
       error: '@pokemon/remove',
@@ -111,5 +124,6 @@ module.exports = {
   list,
   create,
   update,
-  remove
+  remove,
+  listById
 }
